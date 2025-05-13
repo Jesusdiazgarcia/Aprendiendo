@@ -1,0 +1,139 @@
+body {
+  font-family: 'Rubik', sans-serif;
+  color: #e0e0e0;
+  background-color: #f8f9fa;
+}
+td.red2 {
+    color: brown;
+}
+.promo-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #ffc107;
+  color: #000;
+  font-weight: bold;
+  padding: 6px 12px;
+  border-radius: 20px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+
+.custom-navbar {
+  background-color: #153775; /* Azul Barça */
+}
+.navbar-link-custom {
+  color: white;
+  transition: color 0.3s ease;
+  text-decoration: none;
+}
+
+/* Hover con color amarillo */
+.navbar-link-custom:hover {
+  color: #FFD700;
+}
+
+/* Hover en enlaces dentro del navbar */
+.navbar .nav-link:hover,
+.navbar .navbar-brand:hover {
+  color: #FFD700; /* Amarillo dorado */
+}
+.search-bar .form-control {
+  border-radius: 2rem 0 0 2rem;
+  padding-left: 1rem;
+  font-size: 0.95rem;
+}
+
+.search-bar .btn {
+  border-radius: 0 2rem 2rem 0;
+  padding: 0.5rem 1.2rem;
+  transition: background-color 0.3s ease;
+}
+
+.search-bar .btn:hover {
+  background-color: #ffb700; /* Dorado más vivo */
+  color: #fff;
+}
+
+
+h1 {
+    text-align: center;
+    font-size: 3em;
+    background: linear-gradient(90deg, #990000, #002366);
+    background-clip: text;
+    
+  }
+ 
+  .pagination-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .pagination-buttons button {
+    border-radius: 50px;
+    padding: 10px 20px;
+    border: none;
+    font-weight: bold;
+  } 
+
+
+.textproducto{
+  color: #0D1321;
+}  
+  .card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  z-index: 0;
+}
+
+.card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.card:hover .card-img-top {
+  transform: scale(1.08);
+}
+
+.card-img-top {
+  transition: transform 0.3s ease;
+  border-radius: 25px;
+}
+  .text-muted {
+    display: block;
+    
+    
+    
+    margin-top: 0.3em;
+    letter-spacing: 2px;
+  }
+  .brillante {
+    
+      font-family: 'Bebas Neue', sans-serif;
+      letter-spacing: 1px;
+      font-weight: normal;
+    
+    background: linear-gradient(90deg, #FFD700, #87CEFA, #FFFFFF);
+    background-size: 300%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    animation: brilla 5s infinite linear;
+  }
+  
+  @keyframes brilla {
+    0% {
+      background-position: 0% 50%;
+      filter: brightness(1);
+    }
+    50% {
+      background-position: 100% 50%;
+      filter: brightness(1.4);
+    }
+    100% {
+      background-position: 0% 50%;
+      filter: brightness(1);
+    }
+  }
