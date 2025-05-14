@@ -1,15 +1,25 @@
 <?php include("cabecera.php"); ?>
-<?php if(isset($_POST['comprar']) && $_POST['comprar']=="comprar"){
-      $query="INSERT INTO compras (id,cliente,codigo,nombre, precio,cantidad,fecha) VALUES (NULL,'$_POST[cliente]','$_POST[codigo]','$_POST[nombre]','$_POST[precio]', '$_POST[cantidad]',NOW())";
-      $conn->query($query); 
-      $ID=$conn->insert_id;
-      }?>
+<?php if (isset($_POST['comprar']) && $_POST['comprar'] == "comprar") {
+    $query = "INSERT INTO compras (id,cliente,codigo,nombre, precio,cantidad,fecha) 
+              VALUES (NULL,'$_POST[cliente]','$_POST[codigo]','$_POST[nombre]','$_POST[precio]', '$_POST[cantidad]',NOW())";
+    $conn->query($query);
+
+    if ($conn->error) {
+        echo "Error al insertar: " . $conn->error;
+    } else {
+        // ✅ Redirigir solo si se insertó correctamente
+        header("Location: boleta.php");
+        exit();
+    }
+}?>
 
       <?php
-      $query=" SELECT * FROM compras WHERE 1 AND cliente='1' ORDER BY fecha DESC";
+      $query=" SELECT * FROM compras ORDER BY fecha DESC";
       $resource = $conn->query($query); 
+      
       $total = $resource->num_rows;
       ?>
+  
 <div class="container">
         <table width="100%" border="0" cellspacing="0" cellpadding="2" class="table table-striped">
             <thead>
@@ -23,25 +33,29 @@
             <tbody>
 <?php
 
-$rayitas = array("horizontales" => ["cantidad" => 16, "precio" => 1000],
-                 "verticales" => ["cantidad" => 7, "precio" => 1200],
-                 "curvas" => ["cantidad" => 13, "precio" => 2500]);
+
 
 $subtotalGeneral = 0; // Inicializamos el subtotal general
 
-foreach ($rayitas as $nombre => $detalles):
-    $precio = $detalles["precio"];
-    $cantidad = $detalles["cantidad"];
-    $subtotalProducto = $precio * $cantidad;
-    $subtotalGeneral += $subtotalProducto; // Sumamos al subtotal general
+ if ($total) { $rows = $resource->fetch_all(MYSQLI_ASSOC);
+    for ($i = 0; $i < count($rows); $i++) {
+        $row = $rows[$i];
+        $subtotalProducto = $row['precio'] * $row['cantidad'] ;
+         $subtotalGeneral += $subtotalProducto;
+
 ?>
     <tr>
-        <td>Rayas <?php echo $nombre ?></td>
-        <td><?php echo number_format($precio); ?></td>
-        <td><?php echo number_format($cantidad); ?></td>
+        <td>Rayas <?php echo $row['nombre'] ?></td>
+        <td><?php echo number_format($row['precio']); ?></td>
+        <td><?php echo number_format($row['cantidad']); ?></td>
         <td><?php echo number_format($subtotalProducto); ?></td>
     </tr>
-<?php endforeach; ?>
+<?php     }
+} else { ?>
+    <p class="error">No hay resultados para su consa</p>
+<?php } ?>
+ 
+
     <tr>
         <td>&nbsp;</td>
         <td>&nbsp;</td>

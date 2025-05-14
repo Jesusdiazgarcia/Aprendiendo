@@ -8,7 +8,7 @@ $inicio = $pag * $max;
 $busqueda = isset($_GET['busqueda']) ? $conn->real_escape_string($_GET['busqueda']) : '';
 $categoria = isset($_GET['categoria']) ? $conn->real_escape_string($_GET['categoria']) : '';
 
-$query = "SELECT nombre, categoria, precio, codigo, id FROM productos WHERE 1";
+$query = "SELECT nombre, categoria, precio, codigo, id, disponibilidad FROM productos WHERE 1";
 
  $params = "";
   if (!empty($busqueda)) {
@@ -72,6 +72,7 @@ $total_pag = ceil($total / $max) - 1;
       <div class="card-body text-center">
         <h5 class="card-title fw-bold"><?= $row['nombre']?></h5>
         <p>Categoria: <span><?= $row['categoria'] ?></span></p>
+        
         <a href="producto.php?id=<?php  echo $row['id']?>" class="btn btn-primary mt-2">Comprar</a>
       </div>
     </div>

@@ -61,12 +61,12 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
             <!-- Selector de cantidad -->
             <div class="mb-3">
                 <label for="product-quantity" class="form-label fw-semibold textproducto">Cantidad:</label>
-                <input type="number" class="form-control w-25" id="product-quantity" name="cantidad" value="1" min="1" required>
+                <input type="number" class="form-control w-25" id="product-quantity" name="cantidad" value="1" min="1" max="<?= $row['disponibilidad'] ?>" required>
             </div>
 
             <!-- Botón para enviar el formulario -->
             <div class="d-grid d-md-block mt-4">
-                <button type="submit" class="btn btn-primary btn-lg px-5">Añadir al carrito</button>
+                <button type="submit" name="comprar" value="comprar" class="btn btn-primary btn-lg px-5">Añadir al carrito</button>
             </div>
 
     <!-- Datos ocultos que también se enviarán -->

@@ -46,7 +46,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                             <a class="nav-link navbar-link-custom" href="registro.php">Registrarse</a>
+                             <a class="nav-link navbar-link-custom"  href="registro.php">Registrarse</a>
                         </li>
                         <li class="nav-item">
                              <a class="nav-link navbar-link-custom" href="login.php">Iniciar sesión</a>
