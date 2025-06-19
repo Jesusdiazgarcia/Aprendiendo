@@ -1,5 +1,32 @@
-<?php include("cabecera.php")  ?>
+<?php 
+session_start();
+include("cabecera.php")  ?>
 <?php require_once('conexion.php'); ?>
+
+<?php
+// Mostrar mensaje de logout exitoso
+if (isset($_GET['logout']) && $_GET['logout'] == 'success') {
+    echo '<div class="container mt-3">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fas fa-check-circle me-2"></i>
+                <strong>¡Sesión cerrada!</strong> Has cerrado sesión correctamente.
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+          </div>';
+}
+
+// Mostrar mensaje de login exitoso
+if (isset($_GET['login']) && $_GET['login'] == 'success') {
+    echo '<div class="container mt-3">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fas fa-check-circle me-2"></i>
+                <strong>¡Bienvenido!</strong> Has iniciado sesión correctamente.
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+          </div>';
+}
+?>
+
 <?php
 $max = 5;
 $pag = isset($_GET['pag']) ? (int)$_GET['pag'] : 0;
@@ -8,25 +35,38 @@ $inicio = $pag * $max;
 $busqueda = isset($_GET['busqueda']) ? $conn->real_escape_string($_GET['busqueda']) : '';
 $categoria = isset($_GET['categoria']) ? $conn->real_escape_string($_GET['categoria']) : '';
 
-$query = "SELECT nombre, categoria, precio, codigo, id, disponibilidad FROM productos WHERE 1";
+// Construir la consulta con filtros
+$query = "SELECT nombre, categoria, precio, codigo, id, disponibilidad FROM productos WHERE 1=1";
 
- $params = "";
-  if (!empty($busqueda)) {
-    $params .= "&busqueda=" . urlencode($busqueda);
-  }
-  if (!empty($categoria)) {
-    $params .= "&categoria=" . urlencode($categoria);
-  }
+// Aplicar filtro de búsqueda
+if (!empty($busqueda)) {
+    $query .= " AND nombre LIKE '%$busqueda%'";
+}
+
+// Aplicar filtro de categoría
+if (!empty($categoria)) {
+    $query .= " AND categoria = '$categoria'";
+}
+
 $query .= " ORDER BY fecha DESC LIMIT $inicio, $max";
 $resource = $conn->query($query);
 
-// Total para paginación
-$total_query = "SELECT COUNT(*) AS total FROM productos WHERE 1";
+// Construir parámetros para paginación
+$params = "";
 if (!empty($busqueda)) {
-  $total_query .= " AND nombre LIKE '%$busqueda%'";
+    $params .= "&busqueda=" . urlencode($busqueda);
 }
 if (!empty($categoria)) {
-  $total_query .= " AND categoria = '$categoria'";
+    $params .= "&categoria=" . urlencode($categoria);
+}
+
+// Total para paginación con los mismos filtros
+$total_query = "SELECT COUNT(*) AS total FROM productos WHERE 1=1";
+if (!empty($busqueda)) {
+    $total_query .= " AND nombre LIKE '%$busqueda%'";
+}
+if (!empty($categoria)) {
+    $total_query .= " AND categoria = '$categoria'";
 }
 $result_total = $conn->query($total_query);
 $total = $result_total->fetch_assoc()['total'];
@@ -84,6 +124,7 @@ $total_pag = ceil($total / $max) - 1;
     <p class="error">No hay resultados para su consulta</p>
 <?php } ?>
 </div>
+
 
 
 <?php include("pie.php") ?>

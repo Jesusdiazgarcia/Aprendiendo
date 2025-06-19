@@ -1,4 +1,6 @@
-<?php include('cabecera.php') ?>
+<?php 
+session_start();
+include('cabecera.php') ?>
 <div class="container">
     <div class="registro-container">
       <h1 class="registro-title">Registro de Cliente</h1>
