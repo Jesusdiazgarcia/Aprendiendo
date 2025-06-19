@@ -75,6 +75,30 @@ $total_pag = ceil($total / $max) - 1;
 <!doctype html>
 <div class="container">
    
+<!-- Barra de búsqueda y filtro de categorías (solo en index) -->
+<div class="container mt-4 mb-3">
+  <div class="search-bar w-100">
+    <form method="GET" action="index.php" class="d-flex flex-wrap flex-lg-nowrap align-items-center justify-content-center gap-2" style="max-width: 700px; margin: 0 auto;">
+      <div class="input-group flex-nowrap" style="flex:1 1 260px; min-width:140px; max-width:340px;">
+        <input type="text" class="form-control border-0 shadow-sm" name="busqueda" placeholder="Buscar productos..." value="<?= isset($_GET['busqueda']) ? htmlspecialchars($_GET['busqueda']) : '' ?>">
+        <button type="submit" class="btn btn-warning text-dark fw-semibold shadow-sm px-4">
+          <i class="fas fa-search me-1"></i>Buscar
+        </button>
+      </div>
+      <select name="categoria" class="form-select border-0 shadow-sm" style="max-width: 180px; min-width: 120px; flex:0 0 140px;">
+        <option value="">Todas las categorías</option>
+        <?php
+        $categorias = $conn->query("SELECT DISTINCT categoria FROM productos ORDER BY categoria");
+        while ($cat = $categorias->fetch_assoc()) {
+          $selected = (isset($_GET['categoria']) && $_GET['categoria'] == $cat['categoria']) ? 'selected' : '';
+          echo "<option value=\"{$cat['categoria']}\" $selected>{$cat['categoria']}</option>";
+        }
+        ?>
+      </select>
+    </form>
+  </div>
+</div>
+
 <!-- paginacion -->
 <div class="pagination-buttons text-center mb-3">
   <?php if ($pag - 1 >= 0) { ?>
@@ -113,7 +137,9 @@ $total_pag = ceil($total / $max) - 1;
         <h5 class="card-title fw-bold"><?= $row['nombre']?></h5>
         <p>Categoria: <span><?= $row['categoria'] ?></span></p>
         
-        <a href="producto.php?id=<?php  echo $row['id']?>" class="btn btn-primary mt-2">Comprar</a>
+        <a href="producto.php?id=<?php  echo $row['id']?>" class="btn btn-comprar mt-2">
+          <i class="fas fa-cart-plus me-2"></i>Comprar
+        </a>
       </div>
     </div>
   </div>

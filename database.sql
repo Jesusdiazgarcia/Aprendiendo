@@ -13,7 +13,8 @@ CREATE TABLE IF NOT EXISTS usuarios (
     usuario VARCHAR(50) UNIQUE NOT NULL,
     clave VARCHAR(255) NOT NULL,
     fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    activo BOOLEAN DEFAULT TRUE
+    activo BOOLEAN DEFAULT TRUE,
+    tipo ENUM('cliente','admin') DEFAULT 'cliente'
 );
 
 -- Tabla de productos (si no existe)

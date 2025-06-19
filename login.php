@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $error = 'Por favor, completa todos los campos';
     } else {
         // Buscar usuario en la base de datos
-        $query = "SELECT id, nombre, usuario, clave, email FROM usuarios WHERE usuario = '$usuario' AND activo = 1";
+        $query = "SELECT id, nombre, usuario, clave, email, tipo FROM usuarios WHERE usuario = '$usuario' AND activo = 1";
         $result = $conn->query($query);
         
         $debug_info .= "Query ejecutada: $query<br>";
@@ -42,6 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['usuario_nombre'] = $user['nombre'];
                 $_SESSION['usuario_usuario'] = $user['usuario'];
                 $_SESSION['usuario_email'] = $user['email'];
+                $_SESSION['usuario_tipo'] = $user['tipo'];
                 
                 $debug_info .= "Sesión creada. Redirigiendo...<br>";
                 

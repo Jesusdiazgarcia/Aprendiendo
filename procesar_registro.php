@@ -34,8 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $clave_hash = password_hash($clave, PASSWORD_DEFAULT);
             
             // Insertar nuevo usuario
-            $query = "INSERT INTO usuarios (nombre, email, telefono, pais, direccion, usuario, clave) 
-                      VALUES ('$nombre', '$email', '$telefono', '$pais', '$direccion', '$usuario', '$clave_hash')";
+            $query = "INSERT INTO usuarios (nombre, email, telefono, pais, direccion, usuario, clave, tipo) 
+                      VALUES ('$nombre', '$email', '$telefono', '$pais', '$direccion', '$usuario', '$clave_hash', 'cliente')";
             
             if ($conn->query($query)) {
                 $success = '¡Registro exitoso! Ya puedes iniciar sesión.';
