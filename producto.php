@@ -1,4 +1,7 @@
-<?php include("cabecera.php")  ?>
+<?php 
+session_start();
+include("cabecera.php")  
+?>
 <?php require_once('conexion.php') ?>
 <?php
 // Verifica si el parámetro 'id' existe y es un número positivo
@@ -41,43 +44,67 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                         <?php } ?>
                     </div>
 
-    <form id="compra" name="compra" method="post" action="boleta.php">
-                        <!-- Visualización de datos -->
+                    <?php if (isset($_SESSION['usuario_id'])): ?>
+                        <!-- Usuario logueado - mostrar formulario de compra -->
+                        <form id="compra" name="compra" method="post" action="boleta.php">
+                            <!-- Visualización de datos -->
+                            <p class="textproducto">Categoría: <span><?= $row['categoria'] ?></span></p>
+                            <p class="mt-4 textproducto"><?= $row['descripcion'] ?></p>
+                            <p class="textproducto">Fecha: <span><?= $row['fecha'] ?></span></p>
+
+                            <!-- Selector de talla -->
+                            <div class="mb-3">
+                                <label for="talla" class="form-label fw-semibold textproducto">Talla:</label>
+                                <select class="form-select w-50" id="talla" name="talla" required>
+                                    <option value="S">S</option>
+                                    <option value="M">M</option>
+                                    <option value="L">L</option>
+                                    <option value="XL">XL</option>
+                                </select>
+                            </div>
+
+                            <!-- Selector de cantidad -->
+                            <div class="mb-3">
+                                <label for="product-quantity" class="form-label fw-semibold textproducto">Cantidad:</label>
+                                <input type="number" class="form-control w-25" id="product-quantity" name="cantidad" value="1" min="1" max="<?= $row['disponibilidad'] ?>" required>
+                            </div>
+
+                            <!-- Botón para enviar el formulario -->
+                            <div class="d-grid d-md-block mt-4">
+                                <button type="submit" name="comprar" value="comprar" class="btn btn-primary btn-lg px-5">
+                                    <i class="fas fa-cart-plus me-2"></i>Añadir al carrito
+                                </button>
+                            </div>
+
+                            <!-- Datos ocultos que también se enviarán -->
+                            <input type="hidden" name="nombre" value="<?= $row['nombre'] ?>">
+                            <input type="hidden" name="codigo" value="<?= $row['codigo'] ?>">
+                            <input type="hidden" name="precio" value="<?= $row['precio'] ?>">
+                            <input type="hidden" name="categoria" value="<?= $row['categoria'] ?>">
+                            <input type="hidden" name="descripcion" value="<?= $row['descripcion'] ?>">
+                            <input type="hidden" name="fecha" value="<?= $row['fecha'] ?>">
+                        </form>
+                    <?php else: ?>
+                        <!-- Usuario no logueado - mostrar mensaje de login requerido -->
+                        <div class="alert alert-warning" role="alert">
+                            <h5 class="alert-heading">🔐 Acceso Requerido</h5>
+                            <p>Para agregar productos al carrito, debes <a href="login.php" class="alert-link">iniciar sesión</a> o <a href="registro.php" class="alert-link">registrarte</a>.</p>
+                        </div>
+                        
+                        <!-- Visualización de datos del producto -->
                         <p class="textproducto">Categoría: <span><?= $row['categoria'] ?></span></p>
                         <p class="mt-4 textproducto"><?= $row['descripcion'] ?></p>
                         <p class="textproducto">Fecha: <span><?= $row['fecha'] ?></span></p>
-
-                <!-- Selector de talla -->
-                <div class="mb-3">
-                    <label for="talla" class="form-label fw-semibold textproducto">Talla:</label>
-                    <select class="form-select w-50" id="talla" name="talla" required>
-                        <option value="S">S</option>
-                        <option value="M">M</option>
-                        <option value="L">L</option>
-                        <option value="XL">XL</option>
-                    </select>
-                </div>
-
-            <!-- Selector de cantidad -->
-            <div class="mb-3">
-                <label for="product-quantity" class="form-label fw-semibold textproducto">Cantidad:</label>
-                <input type="number" class="form-control w-25" id="product-quantity" name="cantidad" value="1" min="1" required>
-            </div>
-
-            <!-- Botón para enviar el formulario -->
-            <div class="d-grid d-md-block mt-4">
-                <button type="submit" class="btn btn-primary btn-lg px-5">Añadir al carrito</button>
-            </div>
-
-    <!-- Datos ocultos que también se enviarán -->
-    <input type="hidden" name="nombre" value="<?= $row['nombre'] ?>">
-    <input type="hidden" name="codigo" value="<?= $row['codigo'] ?>">
-    <input type="hidden" name="precio" value="<?= $row['precio'] ?>">
-    <input type="hidden" name="categoria" value="<?= $row['categoria'] ?>">
-    <input type="hidden" name="descripcion" value="<?= $row['descripcion'] ?>">
-    <input type="hidden" name="fecha" value="<?= $row['fecha'] ?>">
-    <input type="hidden" name="cliente" value="1"> <!-- Esto lo puedes cambiar según el usuario -->
-</form>
+                        
+                        <div class="d-grid d-md-block mt-4">
+                            <a href="login.php" class="btn btn-primary btn-lg px-5">
+                                <i class="fas fa-sign-in-alt me-2"></i>Iniciar Sesión
+                            </a>
+                            <a href="registro.php" class="btn btn-outline-primary btn-lg px-5 ms-md-2">
+                                <i class="fas fa-user-plus me-2"></i>Registrarse
+                            </a>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
 
