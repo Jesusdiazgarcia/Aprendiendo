@@ -134,7 +134,7 @@ $productos = $conn->query("SELECT * FROM productos ORDER BY fecha DESC");
                             </tbody>
                         </table>
                     </div>
-                    <?= $mensaje_editar ?>
+                    <div id="mensaje_editar_ajax"><?= $mensaje_editar ?></div>
                 </div>
             </div>
         </div>
@@ -151,7 +151,12 @@ $productos = $conn->query("SELECT * FROM productos ORDER BY fecha DESC");
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Categoría</label>
-                            <input type="text" name="categoria" class="form-control" required maxlength="100">
+                            <select name="categoria" class="form-control" required>
+                                <option value="">Selecciona una categoría</option>
+                                <option value="local">Local</option>
+                                <option value="visitante">Visitante</option>
+                                <option value="alternativa">Alternativa</option>
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Precio</label>
@@ -206,7 +211,12 @@ $productos = $conn->query("SELECT * FROM productos ORDER BY fecha DESC");
           </div>
           <div class="mb-3">
             <label class="form-label">Categoría</label>
-            <input type="text" name="categoria" id="edit_categoria" class="form-control" required maxlength="100">
+            <select name="categoria" id="edit_categoria" class="form-control" required>
+                <option value="">Selecciona una categoría</option>
+                <option value="local">Local</option>
+                <option value="visitante">Visitante</option>
+                <option value="alternativa">Alternativa</option>
+            </select>
           </div>
           <div class="mb-3">
             <label class="form-label">Precio</label>

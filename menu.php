@@ -7,7 +7,7 @@ if (session_status() == PHP_SESSION_NONE) {
 <div style="background-color: #002147;" class="py-3">
     <div class="container d-flex align-items-center justify-content-between flex-wrap">
         <h1 class="mb-0 me-3">
-            <span class="brillante">BSHOP</span>
+            <span class="brillante">FCSTORE</span>
         </h1>
         <nav class="navbar p-0 m-0 w-auto" style="background-color: transparent !important;">
             <ul class="navbar-nav flex-row flex-wrap flex-lg-row align-items-center ms-auto gap-2 gap-lg-3 mb-0" style="flex-direction: row !important;">
@@ -15,7 +15,7 @@ if (session_status() == PHP_SESSION_NONE) {
                     <a class="navbar-brand text-white navram1 fw-bold" href="index.php">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link navbar-link-custom fs-5" href="boleta.php">
+                    <a class="nav-link navbar-link-custom" href="boleta.php">
                         <i class="fas fa-basket-shopping"></i>
                     </a>
                 </li>
@@ -28,7 +28,7 @@ if (session_status() == PHP_SESSION_NONE) {
                 <?php if (isset($_SESSION['usuario_id'])): ?>
                     <!-- Usuario logueado -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link navbar-link-custom" href="#" id="userDropdown" onclick="toggleUserMenu(event)">
+                        <a class="nav-link navbar-link-custom" href="#" id="userDropdown">
                             <?php if(isset($_SESSION['usuario_tipo']) && $_SESSION['usuario_tipo']==='admin'): ?>
                                 <span class="badge bg-danger me-1"><i class="fas fa-user-shield"></i> Admin</span>
                             <?php endif; ?>
@@ -57,47 +57,3 @@ if (session_status() == PHP_SESSION_NONE) {
         </nav>
     </div>
 </div>
-<!-- Script manual para el dropdown del usuario -->
-<script>
-function toggleUserMenu(event) {
-    event.preventDefault();
-    event.stopPropagation();
-    const dropdownMenu = document.getElementById('userDropdownMenu');
-    const userDropdown = document.getElementById('userDropdown');
-    if (dropdownMenu.style.display === 'none' || dropdownMenu.style.display === '') {
-        dropdownMenu.style.display = 'block';
-        dropdownMenu.style.visibility = 'visible';
-        dropdownMenu.style.opacity = '1';
-        userDropdown.innerHTML = userDropdown.innerHTML.replace('▼', '▲');
-    } else {
-        dropdownMenu.style.display = 'none';
-        dropdownMenu.style.visibility = 'hidden';
-        dropdownMenu.style.opacity = '0';
-        userDropdown.innerHTML = userDropdown.innerHTML.replace('▲', '▼');
-    }
-}
-document.addEventListener('click', function(event) {
-    const dropdownMenu = document.getElementById('userDropdownMenu');
-    const userDropdown = document.getElementById('userDropdown');
-    if (dropdownMenu && userDropdown) {
-        if (!userDropdown.contains(event.target) && !dropdownMenu.contains(event.target)) {
-            dropdownMenu.style.display = 'none';
-            dropdownMenu.style.visibility = 'hidden';
-            dropdownMenu.style.opacity = '0';
-            userDropdown.innerHTML = userDropdown.innerHTML.replace('▲', '▼');
-        }
-    }
-});
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape') {
-        const dropdownMenu = document.getElementById('userDropdownMenu');
-        const userDropdown = document.getElementById('userDropdown');
-        if (dropdownMenu && userDropdown) {
-            dropdownMenu.style.display = 'none';
-            dropdownMenu.style.visibility = 'hidden';
-            dropdownMenu.style.opacity = '0';
-            userDropdown.innerHTML = userDropdown.innerHTML.replace('▲', '▼');
-        }
-    }
-});
-</script>

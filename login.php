@@ -66,76 +66,77 @@ require_once('conexion.php');
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-4">
-            <div class="card shadow-lg border-0 rounded-4 mt-5">
-                <div class="card-body p-5">
-                    <div class="text-center mb-4">
-                        <h2 class="fw-bold textproducto">Iniciar Sesión</h2>
-                        <p class="text-muted">Accede a tu cuenta de FCStore</p>
+        <div class="col-md-6 col-lg-5">
+            <div class="login-container">
+                <div class="login-card">
+                    <div class="login-header">
+                        <div class="login-icon">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <h2 class="login-title">Bienvenido de vuelta</h2>
+                        <p class="login-subtitle">Accede a tu cuenta de FCStore</p>
                     </div>
 
                     <?php if (!empty($error)): ?>
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <div class="alert alert-danger alert-dismissible fade show login-alert" role="alert">
                             <i class="fas fa-exclamation-triangle me-2"></i>
                             <?php echo htmlspecialchars($error); ?>
                             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                         </div>
                     <?php endif; ?>
 
-                    <form method="POST" action="login.php">
-                        <div class="mb-3">
-                            <label for="usuario" class="form-label fw-semibold textproducto">
-                                <i class="fas fa-user me-2"></i>Usuario:
+                    <form method="POST" action="login.php" class="login-form">
+                        <div class="form-group">
+                            <label for="usuario" class="form-label">
+                                <i class="fas fa-user"></i>
+                                <span>Usuario</span>
                             </label>
-                            <input type="text" 
-                                   class="form-control form-control-lg" 
-                                   id="usuario" 
-                                   name="usuario" 
-                                   value="<?php echo isset($_POST['usuario']) ? htmlspecialchars($_POST['usuario']) : ''; ?>"
-                                   required>
+                            <div class="input-wrapper">
+                                <input type="text" 
+                                       class="form-control" 
+                                       id="usuario" 
+                                       name="usuario" 
+                                       placeholder="Ingresa tu usuario"
+                                       value="<?php echo isset($_POST['usuario']) ? htmlspecialchars($_POST['usuario']) : ''; ?>"
+                                       required>
+                            </div>
                         </div>
 
-                        <div class="mb-4">
-                            <label for="clave" class="form-label fw-semibold textproducto">
-                                <i class="fas fa-lock me-2"></i>Contraseña:
+                        <div class="form-group">
+                            <label for="clave" class="form-label">
+                                <i class="fas fa-lock"></i>
+                                <span>Contraseña</span>
                             </label>
-                            <input type="password" 
-                                   class="form-control form-control-lg" 
-                                   id="clave" 
-                                   name="clave" 
-                                   required>
+                            <div class="input-wrapper">
+                                <input type="password" 
+                                       class="form-control" 
+                                       id="clave" 
+                                       name="clave" 
+                                       placeholder="Ingresa tu contraseña"
+                                       required>
+                            </div>
                         </div>
 
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary btn-lg">
-                                <i class="fas fa-sign-in-alt me-2"></i>Iniciar Sesión
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-login">
+                                <span class="btn-text">Iniciar Sesión</span>
+                                <i class="fas fa-arrow-right"></i>
                             </button>
                         </div>
                     </form>
 
-                    <div class="text-center mt-4">
-                        <p class="mb-0 text-muted">
+                    <div class="login-footer">
+                        <p class="register-text">
                             ¿No tienes cuenta? 
-                            <a href="registro.php" class="text-decoration-none fw-semibold">Regístrate aquí</a>
+                            <a href="registro.php" class="register-link">Regístrate aquí</a>
                         </p>
-                    </div>
-
-                    <!-- Información de prueba -->
-                    <div class="mt-4 p-3 bg-light rounded-3">
-                        <h6 class="fw-semibold textproducto mb-2">👥 Usuarios de Prueba:</h6>
-                        <small class="text-muted">
-                            <strong>Usuario:</strong> admin<br>
-                            <strong>Contraseña:</strong> password<br><br>
-                            <strong>Usuario:</strong> juanperez<br>
-                            <strong>Contraseña:</strong> password
-                        </small>
                     </div>
 
                     <!-- Debug info (solo mostrar si hay debug) -->
                     <?php if (!empty($debug_info)): ?>
-                        <div class="mt-4 p-3 bg-warning rounded-3">
-                            <h6 class="fw-semibold textproducto mb-2">🐛 Debug Info:</h6>
-                            <small class="text-muted">
+                        <div class="debug-info">
+                            <h6>🐛 Debug Info:</h6>
+                            <small>
                                 <?php echo $debug_info; ?>
                             </small>
                         </div>

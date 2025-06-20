@@ -59,18 +59,18 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                             
                             // Solo mostrar miniaturas si hay imágenes adicionales
                             if ($tiene_imagenes_adicionales): ?>
-                                <div class="thumbnail active" onclick="cambiarImagen('assets/img/<?= $row['codigo'] ?>.webp', this)">
+                                <div class="thumbnail active" data-image-src="assets/img/<?= $row['codigo'] ?>.webp">
                                     <img src="assets/img/<?= $row['codigo'] ?>.webp" alt="Vista 1">
                                 </div>
                                 
                                 <?php if (file_exists($imagen_2)): ?>
-                                    <div class="thumbnail" onclick="cambiarImagen('<?= $imagen_2 ?>', this)">
+                                    <div class="thumbnail" data-image-src="<?= $imagen_2 ?>">
                                         <img src="<?= $imagen_2 ?>" alt="Vista 2">
                                     </div>
                                 <?php endif; ?>
                                 
                                 <?php if (file_exists($imagen_3)): ?>
-                                    <div class="thumbnail" onclick="cambiarImagen('<?= $imagen_3 ?>', this)">
+                                    <div class="thumbnail" data-image-src="<?= $imagen_3 ?>">
                                         <img src="<?= $imagen_3 ?>" alt="Vista 3">
                                     </div>
                                 <?php endif; ?>
@@ -170,9 +170,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
                                                         Cantidad:
                                                     </label>
                                                     <div class="quantity-selector">
-                                                        <button type="button" class="quantity-btn" onclick="cambiarCantidad(-1)">-</button>
-                                                        <input type="number" class="quantity-input" id="cantidad" name="cantidad" value="1" min="1" max="<?= $row['disponibilidad'] ?>" required>
-                                                        <button type="button" class="quantity-btn" onclick="cambiarCantidad(1)">+</button>
+                                                        <button type="button" class="quantity-btn" id="quantity-minus">-</button>
+                                                        <input type="number" class="quantity-input" id="cantidad" name="cantidad" value="1" min="1" max="<?= $row['disponibilidad'] ?>" readonly>
+                                                        <button type="button" class="quantity-btn" id="quantity-plus">+</button>
                                                     </div>
                                                 </div>
                                             </div>
