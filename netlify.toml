@@ -4,10 +4,16 @@
 
 [build.environment]
   PHP_VERSION = "8.1"
+  RAILWAY_ENVIRONMENT = "production"
 
 [[redirects]]
   from = "/*"
   to = "/index.php"
+  status = 200
+
+[[redirects]]
+  from = "/api/*"
+  to = "/api/index.php"
   status = 200
 
 [[headers]]
@@ -17,18 +23,28 @@
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+    Access-Control-Allow-Origin = "*"
 
 [[headers]]
   for = "*.css"
   [headers.values]
     Cache-Control = "public, max-age=31536000"
+    Content-Type = "text/css"
 
 [[headers]]
   for = "*.js"
   [headers.values]
     Cache-Control = "public, max-age=31536000"
+    Content-Type = "application/javascript"
 
 [[headers]]
   for = "*.webp"
   [headers.values]
-    Cache-Control = "public, max-age=31536000" 
+    Cache-Control = "public, max-age=31536000"
+    Content-Type = "image/webp"
+
+[[headers]]
+  for = "*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000"
+    Content-Type = "image/png" 
