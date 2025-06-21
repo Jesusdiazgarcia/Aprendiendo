@@ -1,14 +1,28 @@
 <?php
-// Configuración para Railway (producción) o local
-if (getenv('RAILWAY_ENVIRONMENT')) {
-    // Variables de entorno de Railway
-    $hostname = getenv('MYSQL_HOST') ?: 'localhost';
-    $username = getenv('MYSQL_USER') ?: 'root';
-    $password = getenv('MYSQL_PASSWORD') ?: '';
-    $database = getenv('MYSQL_DATABASE') ?: 'fcstore';
-    $port = getenv('MYSQL_PORT') ?: '3306';
+
+function get_env_var($key, $default = null) {
+    if ($value = getenv($key)) {
+        return $value;
+    }
+    if (isset($_ENV[$key])) {
+        return $_ENV[$key];
+    }
+    if (isset($_SERVER[$key])) {
+        return $_SERVER[$key];
+    }
+    return $default;
+}
+
+// Check for any Railway-specific variable to detect the environment
+if (get_env_var('RAILWAY_ENVIRONMENT')) {
+    // Railway environment
+    $hostname = get_env_var('MYSQL_HOST', 'localhost');
+    $username = get_env_var('MYSQL_USER', 'root');
+    $password = get_env_var('MYSQL_PASSWORD', '');
+    $database = get_env_var('MYSQL_DATABASE', 'fcstore');
+    $port = get_env_var('MYSQL_PORT', '3306');
 } else {
-    // Configuración local
+    // Local environment
     $hostname = "localhost";
     $username = "Fcstore";
     $password = "Jesusram1";
@@ -16,9 +30,10 @@ if (getenv('RAILWAY_ENVIRONMENT')) {
     $port = "3306";
 }
 
-$conn = new mysqli($hostname, $username, $password, $database, $port);
+$conn = new mysqli($hostname, $username, $password, $database, (int)$port);
 
 if ($conn->connect_error) {
+    // Do not expose credentials in the error message
     die('Error de Conexión (' . $conn->connect_errno . ') ' . $conn->connect_error);
 }
 
