@@ -14,7 +14,7 @@ function get_env_var($key, $default = null) {
 }
 
 // Check for any Railway-specific variable to detect the environment
-if (get_env_var('RAILWAY_ENVIRONMENT')) {
+if (get_env_var('RAILWAY_PUBLIC_DOMAIN')) {
     // Railway environment
     $hostname = get_env_var('MYSQL_HOST', 'localhost');
     $username = get_env_var('MYSQL_USER', 'root');
